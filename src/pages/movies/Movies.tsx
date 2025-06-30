@@ -6,7 +6,7 @@ import { useGenre } from "@/api/hooks/useGenre";
 // import Genre from "@/components/genre/Genre";
 import type { IGenre } from "@/types";
 import MovieSkeleton from "@/components/movie-view/MovieSkeleton";
-import ErrorUI from "@/components/ui/ErrorUi";
+import ErrorUi from "@/components/ui/ErrorUi";
 import { useSearchParams } from "react-router-dom";
 
 
@@ -66,7 +66,7 @@ const Movies = () => {
       </div>
 
       {isError ? (
-        <ErrorUI
+        <ErrorUi
           message={error?.message || "Не удалось загрузить фильмы."}
           onRetry={() => refetch()}
         />

@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { useMovie } from "@/api/hooks/useMovie";
 import MovieView from "@/components/movie-view/MovieView";
 import MovieSkeleton from "@/components/movie-view/MovieSkeleton";
-import ErrorUI from "@/components/ui/ErrorUi";
+import ErrorUi from "@/components/ui/ErrorUi";
 
 const Search = () => {
   const [params] = useSearchParams();
@@ -19,7 +19,7 @@ const Search = () => {
       <h2 className="text-2xl font-bold mb-4">Результаты для: <span className="text-blue-600">{query}</span></h2>
 
       {isError ? (
-        <ErrorUI message={error?.message} onRetry={refetch} />
+        <ErrorUi message={error?.message} onRetry={refetch} />
       ) : isPending ? (
         <MovieSkeleton />
       ) : (

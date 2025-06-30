@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useMovie } from "@/api/hooks/useMovie";
 import MovieView from "@/components/movie-view/MovieView";
 import { IMAGE_URL } from "@/const";
-import ErrorUI from "@/components/ui/ErrorUi";
+import ErrorUi from "@/components/ui/ErrorUi";
 import type { CastMember } from "@/types";
 import type { IGenre } from "@/types";
 import type { Video } from "@/types";
@@ -22,7 +22,7 @@ const MovieDetails = () => {
   const { data: videos } = getVideos(id!);
 
   if (isPending) return <p className="text-center py-10">Загрузка...</p>;
-  if (isError) return <ErrorUI message={error?.message} />;
+  if (isError) return <ErrorUi message={error?.message} />;
 
   const trailer = videos?.results?.find((v: Video) => v.type === "Trailer" && v.site === "YouTube");
 
