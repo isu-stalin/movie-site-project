@@ -7,7 +7,6 @@ import ErrorUi from "@/components/ui/ErrorUi";
 import type { CastMember } from "@/types";
 import type { IGenre } from "@/types";
 import type { Video } from "@/types";
-
 const TABS = ["Трейлер", "Детали", "Актёры", "Описание"] as const;
 
 const MovieDetails = () => {
