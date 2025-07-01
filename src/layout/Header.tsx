@@ -38,7 +38,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-black shadow">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="text-2xl font-bold text-black dark:text-white">🎬 Moviee</div>
+        <div className="text-2xl font-bold text-black dark:text-white"><NavLink to="/">🎬 Moviee</NavLink></div>
 
         <div className="flex items-center gap-6 relative">
           <NavLink to="/" className="text-sm font-medium hover:underline">
