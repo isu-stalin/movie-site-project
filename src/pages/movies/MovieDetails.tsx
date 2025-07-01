@@ -8,6 +8,7 @@ import type { CastMember } from "@/types";
 import type { IGenre } from "@/types";
 import type { Video } from "@/types";
 const TABS = ["Трейлер", "Детали", "Актёры", "Описание"] as const;
+import { Link } from "react-router-dom";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -93,20 +94,23 @@ const MovieDetails = () => {
         {activeTab === "Актёры" && (
           <div className="flex flex-wrap justify-center gap-4">
             {credits?.cast?.slice(0, 10).map((actor: CastMember) => (
-                <div key={actor.id} className="w-32 text-center">
-                    <img
+              <div key={actor.id} className="w-32 text-center">
+                <Link to={`/actors/${actor.id}`}>
+                  <img
                     src={
-                        actor.profile_path
+                      actor.profile_path
                         ? `${IMAGE_URL}${actor.profile_path}`
                         : "https://via.placeholder.com/150x225?text=No+Image"
                     }
                     alt={actor.name}
-                    className="rounded shadow w-full h-auto"
-                    />
-                    <p className="mt-2 text-sm font-semibold">{actor.name}</p>
-                    <p className="text-xs text-gray-400">{actor.character}</p>
-                </div>
+                    className="rounded shadow w-full h-auto hover:opacity-80 transition"
+                  />
+                  <p className="mt-2 text-sm font-semibold">{actor.name}</p>
+                </Link>
+                <p className="text-xs text-gray-400">{actor.character}</p>
+              </div>
             ))}
+
           </div>
         )}
 

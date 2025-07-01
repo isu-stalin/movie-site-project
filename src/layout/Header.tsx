@@ -16,13 +16,17 @@ const Header = () => {
   }, [queryParam]);
 
   useEffect(() => {
-    if (showInput) inputRef.current?.focus();
+    if (showInput) {
+      inputRef.current?.focus();
+    }
   }, [showInput]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      navigate(`/search?query=${searchTerm.trim()}`);
+      navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
+    } else {
+      navigate("/search");
     }
   };
 
@@ -34,7 +38,6 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-black shadow">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        
         <div className="text-2xl font-bold text-black dark:text-white">🎬 Moviee</div>
 
         <div className="flex items-center gap-6 relative">
@@ -45,21 +48,24 @@ const Header = () => {
             Movies
           </NavLink>
 
-          <form onSubmit={handleSearch} className="flex items-center gap-2 relative">
+          <form
+            onSubmit={handleSearch}
+            className="flex items-center gap-2 relative"
+          >
             {showInput && (
               <input
                 ref={inputRef}
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search..."
-                className="transition-all duration-300 w-40 md:w-56 px-3 py-1 border border-gray-400 rounded dark:bg-slate-800 dark:text-white"
+                placeholder="Поиск фильмов..."
+                className="w-64 md:w-80 px-4 py-2 border border-gray-400 rounded dark:bg-slate-800 dark:text-white transition-all duration-300"
               />
             )}
             <button
               type="button"
               title="Поиск"
-              onClick={() => setShowInput(prev => !prev)}
+              onClick={() => setShowInput((prev) => !prev)}
               className="text-xl text-black dark:text-white"
             >
               <SearchOutlined />
@@ -67,7 +73,11 @@ const Header = () => {
           </form>
         </div>
 
-        <button onClick={handleTheme} title="Сменить тему" className="text-xl">
+        <button
+          onClick={handleTheme}
+          title="Сменить тему"
+          className="text-xl text-black dark:text-white"
+        >
           🌗
         </button>
       </div>
