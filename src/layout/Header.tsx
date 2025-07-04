@@ -1,6 +1,11 @@
 import { useEffect, useState, useRef } from "react";
-import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import logo from "@/assets/logo.svg";
+import movieIc from "@/assets/movie-icon.svg";
+import tabledIc from "@/assets/tablet-line.svg";
+import savedIc from "@/assets/saved-icon.svg";
+import profileIc from "@/assets/Profile_Icon.svg";
+import SearchIc from "@/assets/search-icon.svg";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -9,6 +14,9 @@ const Header = () => {
 
   const [searchTerm, setSearchTerm] = useState(queryParam);
   const [showInput, setShowInput] = useState(false);
+  const [theme, setTheme] = useState<string>(
+    localStorage.getItem("theme") || "light"
+  );
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -32,26 +40,84 @@ const Header = () => {
 
   const handleTheme = () => {
     const isDark = document.body.classList.toggle("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
+    const newTheme = isDark ? "dark" : "light";
+    localStorage.setItem("theme", newTheme);
+    setTheme(newTheme);
   };
 
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-black shadow">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="text-2xl font-bold text-black dark:text-white"><NavLink to="/">🎬 Moviee</NavLink></div>
-
-        <div className="flex items-center gap-6 relative">
-          <NavLink to="/" className="text-sm font-medium hover:underline">
-            Home
-          </NavLink>
-          <NavLink to="/movies" className="text-sm font-medium hover:underline">
+        <div className="text-2xl font-bold text-black dark:text-white">
+          <NavLink
+            className="flex items-center gap-2 text-[#C61F1F]"
+            to="/"
+          >
+            <img src={logo} className="w-[56px]" alt="logo" />
             Movies
           </NavLink>
+        </div>
 
-          <form
-            onSubmit={handleSearch}
-            className="flex items-center gap-2 relative"
+        <div className="flex items-center gap-6 relative">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `flex flex-col items-center text-sm font-medium ${
+                isActive ? "text-[#C61F1F]" : "text-black dark:text-white"
+              }`
+            }
           >
+            {({ isActive }) => (
+              <>
+                <img
+                  src={movieIc}
+                  alt=""
+                  className={`w-7 h-7 ${isActive ? "filter-red" : ""}`}
+                />
+                Home
+              </>
+            )}
+          </NavLink>
+          <NavLink
+            to="/movies"
+            className={({ isActive }) =>
+              `flex flex-col items-center text-sm font-medium ${
+                isActive ? "text-[#C61F1F]" : "text-black dark:text-white"
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <img
+                  src={tabledIc}
+                  alt=""
+                  className={`w-7 h-7 ${isActive ? "filter-red" : ""}`}
+                />
+                Movies
+              </>
+            )}
+          </NavLink>
+          <NavLink
+            to="/saved"
+            className={({ isActive }) =>
+              `flex flex-col items-center text-sm font-medium ${
+                isActive ? "text-[#C61F1F]" : "text-black dark:text-white"
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <img
+                  src={savedIc}
+                  alt=""
+                  className={`w-7 h-7 ${isActive ? "filter-red" : ""}`}
+                />
+                Saved
+              </>
+            )}
+          </NavLink>
+
+          <form onSubmit={handleSearch} className="flex items-center gap-2 relative">
             {showInput && (
               <input
                 ref={inputRef}
@@ -66,20 +132,50 @@ const Header = () => {
               type="button"
               title="Поиск"
               onClick={() => setShowInput((prev) => !prev)}
-              className="text-xl text-black dark:text-white"
+              className={`flex flex-col items-center text-sm font-medium ${
+                showInput ? "text-[#C61F1F]" : "text-black dark:text-white"
+              }`}
             >
-              <SearchOutlined />
+              <img
+                src={SearchIc}
+                alt="Search"
+                className={`w-7 h-7 ${showInput ? "filter-red" : ""}`}
+              />
+              Search
             </button>
           </form>
         </div>
 
-        <button
-          onClick={handleTheme}
-          title="Сменить тему"
-          className="text-xl text-black dark:text-white"
-        >
-          🌗
-        </button>
+        <div className="flex items-center gap-6">
+          <button
+            onClick={handleTheme}
+            title="Сменить тему"
+            className="text-xl text-black dark:text-white"
+          >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 3.582 8 8 8h0.5c0.667 0 1.294-0.263 1.768-0.732l1.5-1.5c0.651-0.65 0.732-1.678 0.154-2.442a1.75 1.75 0 00-1.422-.826l-1.83-.03a2.5 2.5 0 01-2.43-2.5c0-1.381 1.119-2.5 2.5-2.5h1c2.761 0 5-2.239 5-5 0-2.485-2.015-4.5-4.5-4.5z"/>
+          </svg>
+          </button>
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              `flex flex-col items-center text-sm font-medium ${
+                isActive ? "text-[#C61F1F]" : "text-black dark:text-white"
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <img
+                  src={profileIc}
+                  alt="Profile"
+                  className={`w-7 h-7 ${isActive ? "filter-red" : ""}`}
+                />
+                Профиль
+              </>
+            )}
+          </NavLink>
+        </div>
       </div>
     </header>
   );

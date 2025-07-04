@@ -3,20 +3,15 @@ import MovieView from "@/components/movie-view/MovieView";
 import React, { useState } from "react";
 import { Pagination } from "antd";
 import { useGenre } from "@/api/hooks/useGenre";
-// import Genre from "@/components/genre/Genre";
 import type { IGenre } from "@/types";
 import MovieSkeleton from "@/components/movie-view/MovieSkeleton";
 import Error from "@/components/ui/Error";
 import { useSearchParams } from "react-router-dom";
 
-
-
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1", 10);
   const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
-
-  
 
   const { getMovies } = useMovie();
   const { getGenres } = useGenre();
@@ -54,7 +49,7 @@ const Movies = () => {
           <button
             key={genre.id}
             onClick={() => handleGenreClick(genre.id)}
-            className={`px-4 py-2 rounded-full whitespace-nowrap text-sm border transition ${
+            className={`px-4 py-2 mb-4 rounded-full whitespace-nowrap text-sm border transition ${
               selectedGenre === genre.id
                 ? "bg-black text-white border-black"
                 : "bg-white dark:bg-slate-800 dark:text-white border-gray-400"

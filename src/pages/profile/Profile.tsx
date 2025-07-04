@@ -1,0 +1,9 @@
+const Profile = () => {
+    return (
+      <div className="container mx-auto py-8 text-center text-2xl text-black dark:text-white">
+        Profile Page
+      </div>
+    );
+  };
+  
+  export default Profile;  

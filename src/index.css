@@ -8,3 +8,8 @@
     margin-left: auto;
     margin-right: auto;
 }
+.filter-red {
+    filter: brightness(0) saturate(100%) invert(15%) sepia(95%) saturate(5860%)
+      hue-rotate(-4deg) brightness(88%) contrast(102%);
+  }
+  
