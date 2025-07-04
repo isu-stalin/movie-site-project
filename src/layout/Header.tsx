@@ -14,9 +14,6 @@ const Header = () => {
 
   const [searchTerm, setSearchTerm] = useState(queryParam);
   const [showInput, setShowInput] = useState(false);
-  const [theme, setTheme] = useState<string>(
-    localStorage.getItem("theme") || "light"
-  );
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -42,7 +39,6 @@ const Header = () => {
     const isDark = document.body.classList.toggle("dark");
     const newTheme = isDark ? "dark" : "light";
     localStorage.setItem("theme", newTheme);
-    setTheme(newTheme);
   };
 
   return (

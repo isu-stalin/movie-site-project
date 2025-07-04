@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Thumbs, Autoplay, Navigation } from "swiper/modules";
 
-import "swiper/css";
-import "swiper/css/thumbs";
-import "swiper/css/navigation";
+import "swiper/swiper-bundle.css";
+// import "swiper/css/thumbs";
+// import "swiper/css/navigation";
 
 const Carousel = () => {
   const navigate = useNavigate();
