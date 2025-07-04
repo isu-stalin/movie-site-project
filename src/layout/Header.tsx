@@ -5,7 +5,7 @@ import movieIc from "@/assets/movie-icon.svg";
 import tabledIc from "@/assets/tablet-line.svg";
 import savedIc from "@/assets/saved-icon.svg";
 import profileIc from "@/assets/Profile_Icon.svg";
-import SearchIc from "@/assets/search-icon.svg";
+import SearchIc from "@/assets/Search-icon.svg";
 
 const Header = () => {
   const navigate = useNavigate();
