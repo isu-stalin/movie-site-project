@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useActor } from "@/api/hooks/useActors";
 import { IMAGE_URL } from "@/const";
+import MovieView from "@/components/movie-view/MovieView";
 
 const ITEMS_PER_PAGE = 8;
 
 const ActorDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { getActorDetails, getActorMovies } = useActor();
 
   const { data: actor, isPending: loadingActor } = getActorDetails(id!);
@@ -18,10 +18,6 @@ const ActorDetails = () => {
   if (loadingActor || loadingMovies) {
     return <p className="text-center py-10">Загрузка...</p>;
   }
-
-  const handleMovieClick = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
-  };
 
   const totalPages = Math.ceil(movies.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -59,30 +55,7 @@ const ActorDetails = () => {
         <h2 className="text-2xl font-semibold mb-6 text-center">
           Фильмы с участием
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
-          {currentMovies.map((movie: any) => (
-            <div
-              key={movie.id}
-              onClick={() => handleMovieClick(movie.id)}
-              className="bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-xl transition cursor-pointer"
-            >
-              <img
-                src={
-                  movie.poster_path
-                    ? `${IMAGE_URL}${movie.poster_path}`
-                    : "https://via.placeholder.com/150x225?text=No+Image"
-                }
-                alt={movie.title}
-                className="w-full h-auto object-cover"
-              />
-              <div className="p-2 text-center">
-                <p className="text-xs font-medium text-gray-800 dark:text-white">
-                  {movie.title}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <MovieView data={currentMovies} />
 
         <div className="flex justify-center items-center gap-4 mt-8">
           <button

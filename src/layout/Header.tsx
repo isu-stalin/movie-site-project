@@ -115,31 +115,55 @@ const Header = () => {
 
           <form onSubmit={handleSearch} className="flex items-center gap-2 relative">
             {showInput && (
-              <input
-                ref={inputRef}
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Поиск фильмов..."
-                className="w-64 md:w-80 px-4 py-2 border border-gray-400 rounded dark:bg-slate-800 dark:text-white transition-all duration-300"
-              />
+              <div className="relative w-64 md:w-80">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Поиск фильмов..."
+                  className="w-full px-4 py-2 border border-gray-400 rounded dark:bg-slate-800 dark:text-white transition-all duration-300 pr-10"
+                />
+                <button
+                  type="submit"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-600 hover:text-[#C61F1F] transition"
+                  title="Искать"
+                >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"
+                      />
+                    </svg>
+                </button>
+              </div>
             )}
-            <button
-              type="button"
-              title="Поиск"
-              onClick={() => setShowInput((prev) => !prev)}
-              className={`flex flex-col items-center text-sm font-medium ${
-                showInput ? "text-[#C61F1F]" : "text-black dark:text-white"
-              }`}
-            >
-              <img
-                src={SearchIc}
-                alt="Search"
-                className={`w-7 h-7 ${showInput ? "filter-red" : ""}`}
-              />
-              Search
-            </button>
-          </form>
+
+          <button
+            type="button"
+            title="Поиск"
+            onClick={() => setShowInput((prev) => !prev)}
+            className={`flex flex-col items-center text-sm font-medium ${
+              showInput ? "text-[#C61F1F]" : "text-black dark:text-white"
+            }`}
+          >
+            <img
+              src={SearchIc}
+              alt="Search"
+              className={`w-7 h-7 ${showInput ? "filter-red" : ""}`}
+            />
+            Search
+          </button>
+        </form>
+
         </div>
 
         <div className="flex items-center gap-6">

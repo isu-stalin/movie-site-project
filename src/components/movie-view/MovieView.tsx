@@ -10,39 +10,38 @@ interface Props {
 
 const MovieView: FC<Props> = ({ data }) => {
   const navigate = useNavigate();
-  const { favorites, toggleFavorite } = useFavorites(); // вызываем хук
+  const { favorites, toggleFavorite } = useFavorites();
 
   return (
-    <div className="container mx-auto grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5">
+    <div className="container mx-auto grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-6">
       {data?.map((movie: IMovie) => {
-        const isFavorite = favorites.includes(movie.id); // проверяем избранное
+        const isFavorite = favorites.includes(movie.id);
 
         return (
-          <div className="dark:bg-slate-900 bg-white relative" key={movie.id}>
-            <div
-              className="cursor-pointer hover:scale-105 transition"
-              onClick={() => navigate(`/movies/${movie.id}`)}
-            >
+          <div
+            key={movie.id}
+            className="relative rounded-lg overflow-hidden bg-black border-1 border-red-600 shadow-md"
+          >
+            <div onClick={() => navigate(`/movies/${movie.id}`)} className="cursor-pointer">
               <img
-                loading="lazy"
                 src={IMAGE_URL + movie.poster_path}
                 alt={movie.title}
+                className="w-full h-auto object-cover"
+                loading="lazy"
               />
             </div>
-            <div>
-              <h3
-                title={movie.title}
-                className="text-xl font-semibold line-clamp-1"
-              >
-                {movie.title}
-              </h3>
-              <p>{movie.vote_average}</p>
+
+            <div className="p-4 text-center">
+              <h3 className="text-white text-lg font-bold line-clamp-1">{movie.title}</h3>
+              <p className="text-red-500 mt-1 font-medium">
+                Оценка: {movie.vote_average}
+              </p>
             </div>
 
             <button
               onClick={() => toggleFavorite(movie.id)}
-              className={`absolute top-2 right-2 p-2 rounded-full ${
-                isFavorite ? "bg-red-600 text-white" : "bg-gray-300 text-black"
+              className={`absolute top-2 right-2 p-2 w-[40px] rounded-full border-1 ${
+                isFavorite ? "bg-red-600 text-white" : "bg-white text-black"
               }`}
               title="В избранное"
             >
