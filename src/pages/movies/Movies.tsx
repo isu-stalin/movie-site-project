@@ -33,7 +33,7 @@ const Movies = () => {
     searchParams.set("page", newPage.toString());
     setSearchParams(searchParams);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };  
+  };
 
   const handleGenreClick = (id: number) => {
     setSelectedGenre((prev) => (prev === id ? null : id));
@@ -41,7 +41,6 @@ const Movies = () => {
     setSearchParams(searchParams);
   };  
     
-
   return (
     <div className="container mx-auto p-4">
       <div className="mb-4 overflow-auto flex gap-4">

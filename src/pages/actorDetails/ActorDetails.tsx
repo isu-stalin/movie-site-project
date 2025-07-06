@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useActor } from "@/api/hooks/useActors";
 import { IMAGE_URL } from "@/const";
+
+const ITEMS_PER_PAGE = 8;
 
 const ActorDetails = () => {
   const { id } = useParams();
@@ -11,9 +13,7 @@ const ActorDetails = () => {
   const { data: actor, isPending: loadingActor } = getActorDetails(id!);
   const { data: movies, isPending: loadingMovies } = getActorMovies(id!);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [id]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   if (loadingActor || loadingMovies) {
     return <p className="text-center py-10">Загрузка...</p>;
@@ -22,6 +22,10 @@ const ActorDetails = () => {
   const handleMovieClick = (movieId: number) => {
     navigate(`/movies/${movieId}`);
   };
+
+  const totalPages = Math.ceil(movies.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const currentMovies = movies.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   return (
     <div className="dark:bg-black text-black dark:text-white">
@@ -52,9 +56,11 @@ const ActorDetails = () => {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <h2 className="text-2xl font-semibold mb-6 text-center">Фильмы с участием</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {movies.map((movie: any) => (
+        <h2 className="text-2xl font-semibold mb-6 text-center">
+          Фильмы с участием
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+          {currentMovies.map((movie: any) => (
             <div
               key={movie.id}
               onClick={() => handleMovieClick(movie.id)}
@@ -76,6 +82,32 @@ const ActorDetails = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="flex justify-center items-center gap-4 mt-8">
+          <button
+            onClick={() =>{ 
+              setCurrentPage((p) => Math.max(p - 1, 1));
+              window.scrollTo({top:0, behavior: 'smooth'});
+            }}
+            disabled={currentPage === 1}
+            className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 disabled:opacity-50 cursor-pointer"
+          >
+            Назад
+          </button>
+          <span className="text-sm">
+            Страница {currentPage} из {totalPages}
+          </span>
+          <button
+            onClick={() =>{ 
+              setCurrentPage((p) => Math.min(p + 1, totalPages))
+              window.scrollTo({top:0, behavior:"smooth"})
+            }}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 disabled:opacity-50 cursor-pointer"
+          >
+            Вперёд
+          </button>
         </div>
       </div>
     </div>
