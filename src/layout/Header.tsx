@@ -115,7 +115,7 @@ const Header = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-6">
-          <button onClick={handleTheme} title="Сменить тему" className="text-xl text-black dark:text-white">
+          <button onClick={handleTheme} title="Сменить тему" className="text-xl cursor-pointer text-black dark:text-white">
             <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 3.582 8 8 8h0.5c0.667 0 1.294-0.263 1.768-0.732l1.5-1.5c0.651-0.65 0.732-1.678 0.154-2.442a1.75 1.75 0 00-1.422-.826l-1.83-.03a2.5 2.5 0 01-2.43-2.5c0-1.381 1.119-2.5 2.5-2.5h1c2.761 0 5-2.239 5-5 0-2.485-2.015-4.5-4.5-4.5z" />
             </svg>
