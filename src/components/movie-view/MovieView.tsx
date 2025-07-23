@@ -2,7 +2,10 @@ import { IMAGE_URL } from "@/const";
 import type { IMovie } from "@/types";
 import React, { type FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { useFavorites } from "@/api/hooks/useFavorites";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
+import { toggleFavorite } from "@/redux/store/slices";
+import { useSelector } from "react-redux"
+import { type RootState } from "@/redux/store/store";
 
 interface Props {
   data: undefined | IMovie[];
@@ -10,7 +13,13 @@ interface Props {
 
 const MovieView: FC<Props> = ({ data }) => {
   const navigate = useNavigate();
-  const { favorites, toggleFavorite } = useFavorites();
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector((state : RootState) => state.favorites.items);
+
+  const handleToggle = (id: number) => {
+    dispatch(toggleFavorite(id));
+  };
+  const user = useSelector((state: RootState) => state.auth.user);
 
   return (
     <div className="container mx-auto grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-6">
@@ -39,8 +48,14 @@ const MovieView: FC<Props> = ({ data }) => {
             </div>
 
             <button
-              onClick={() => toggleFavorite(movie.id)}
-              className={`absolute top-2 right-2 p-2 w-[40px] rounded-full border-1 ${
+              onClick={() => {
+                if (!user) {
+                  alert("Чтобы сохранить фильм, войдите в аккаунт.");
+                  return;
+                }
+                handleToggle(movie.id)
+              }}
+              className={`absolute top-2 right-2 p-2 w-[40px] rounded-full border-1 cursor-pointer ${
                 isFavorite ? "bg-red-600 text-white" : "bg-white text-black"
               }`}
               title="В избранное"

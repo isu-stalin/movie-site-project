@@ -1,7 +1,7 @@
-import { useFavorites } from "@/api/hooks/useFavorites";
 import { useQueries } from "@tanstack/react-query";
 import MovieView from "@/components/movie-view/MovieView";
 import { api } from "@/api/index";
+import { useAppSelector } from "@/redux/store/hooks";
 
 async function fetchMovie(id: string) {
   const { data } = await api.get(`movie/${id}?language=ru-RU`);
@@ -9,13 +9,13 @@ async function fetchMovie(id: string) {
 }
 
 const Saved = () => {
-  const { favorites } = useFavorites();
+  const favorites = useAppSelector((state) => state.favorites.items);
 
   const queries = useQueries({
     queries: favorites.map((id) => ({
       queryKey: ["movie", id.toString()],
       queryFn: () => fetchMovie(id.toString()),
-      enabled: !!favorites.length,  
+      enabled: !!favorites.length,
     })),
   });
 

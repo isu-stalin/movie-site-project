@@ -1,31 +1,42 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
+import { setSearchTerm } from "@/redux/store/searchslice";
 import logo from "@/assets/logo.svg";
 import movieIc from "@/assets/movie-icon.svg";
 import tabledIc from "@/assets/tablet-line.svg";
 import savedIc from "@/assets/saved-icon.svg";
 import profileIc from "@/assets/Profile_Icon.svg";
 import SearchIc from "@/assets/Search-icon.svg";
+import { useSelector } from "react-redux";
+import { type RootState } from "@/redux/store/store";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { search } = useLocation();
   const queryParam = new URLSearchParams(search).get("query") || "";
 
-  const [searchTerm, setSearchTerm] = useState(queryParam);
+  const dispatch = useAppDispatch();
+  const searchTerm = useAppSelector((state) => state.search.term);
   const [showInput, setShowInput] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const user = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
-    setSearchTerm(queryParam);
-  }, [queryParam]);
+    dispatch(setSearchTerm(queryParam));
+  }, [queryParam, dispatch]);
 
   useEffect(() => {
     if (showInput) {
       inputRef.current?.focus();
     }
   }, [showInput]);
+
+  useEffect(() => {
+    setShowInput(false);
+  }, [location.pathname]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,7 +57,6 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-black shadow">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        
         <div className="flex items-center gap-2 text-2xl font-bold text-black dark:text-white">
           <NavLink to="/" className="flex items-center gap-2 text-[#C61F1F]">
             <img src={logo} className="w-[56px]" alt="logo" />
@@ -66,23 +76,20 @@ const Header = () => {
 
         <div className="hidden md:flex items-center gap-6">
           <NavLink to="/" className={({ isActive }) =>
-            `flex flex-col items-center text-sm font-medium ${
-              isActive ? "text-[#C61F1F]" : "text-black dark:text-white"
-            }`}>
+            `flex flex-col items-center text-sm font-medium ${isActive ? "text-[#C61F1F]" : "text-black dark:text-white"}`
+          }>
             <img src={movieIc} alt="" className="w-7 h-7" />
             Home
           </NavLink>
           <NavLink to="/movies" className={({ isActive }) =>
-            `flex flex-col items-center text-sm font-medium ${
-              isActive ? "text-[#C61F1F]" : "text-black dark:text-white"
-            }`}>
+            `flex flex-col items-center text-sm font-medium ${isActive ? "text-[#C61F1F]" : "text-black dark:text-white"}`
+          }>
             <img src={tabledIc} alt="" className="w-7 h-7" />
             Movies
           </NavLink>
           <NavLink to="/saved" className={({ isActive }) =>
-            `flex flex-col items-center text-sm font-medium ${
-              isActive ? "text-[#C61F1F]" : "text-black dark:text-white"
-            }`}>
+            `flex flex-col items-center text-sm font-medium ${isActive ? "text-[#C61F1F]" : "text-black dark:text-white"}`
+          }>
             <img src={savedIc} alt="" className="w-7 h-7" />
             Saved
           </NavLink>
@@ -94,7 +101,7 @@ const Header = () => {
                   ref={inputRef}
                   type="text"
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => dispatch(setSearchTerm(e.target.value))}
                   placeholder="Поиск фильмов..."
                   className="w-full px-4 py-2 border border-gray-400 rounded dark:bg-slate-800 dark:text-white pr-10"
                 />
@@ -105,9 +112,7 @@ const Header = () => {
                 </button>
               </div>
             )}
-            <button type="button" onClick={() => setShowInput((prev) => !prev)} className={`flex flex-col items-center text-sm font-medium ${
-              showInput ? "text-[#C61F1F]" : "text-black dark:text-white"
-            }`}>
+            <button type="button" onClick={() => setShowInput((prev) => !prev)} className={`flex flex-col items-center text-sm font-medium cursor-pointer ${showInput ? "text-[#C61F1F]" : "text-black dark:text-white"}`}>
               <img src={SearchIc} alt="Search" className="w-7 h-7" />
               Search
             </button>
@@ -121,11 +126,19 @@ const Header = () => {
             </svg>
           </button>
           <NavLink to="/profile" className={({ isActive }) =>
-            `flex flex-col items-center text-sm font-medium ${
-              isActive ? "text-[#C61F1F]" : "text-black dark:text-white"
-            }`}>
-            <img src={profileIc} alt="Profile" className="w-7 h-7" />
-            Профиль
+            `flex items-center gap-2 text-sm font-medium ${isActive ? "text-[#C61F1F]" : "text-black dark:text-white"}`
+          }>
+            {user ? (
+              <>
+                <img src={user.picture} alt={user.name} className="w-8 h-8 rounded-full" />
+                <span className="hidden md:inline">{user.name.split(" ")[0]}</span>
+              </>
+            ) : (
+              <>
+                <img src={profileIc} alt="Profile" className="w-7 h-7" />
+                <span>Профиль</span>
+              </>
+            )}
           </NavLink>
         </div>
 
@@ -155,7 +168,7 @@ const Header = () => {
                 ref={inputRef}
                 type="text"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => dispatch(setSearchTerm(e.target.value))}
                 placeholder="Поиск фильмов..."
                 className="w-48 px-2 py-1 border rounded dark:bg-slate-800 dark:text-white"
               />
@@ -165,7 +178,6 @@ const Header = () => {
         )}
       </div>
     </header>
-
   );
 };
 

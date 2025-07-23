@@ -48,7 +48,7 @@ const Movies = () => {
           <button
             key={genre.id}
             onClick={() => handleGenreClick(genre.id)}
-            className={`px-4 py-2 mb-4 rounded-full whitespace-nowrap text-sm border transition ${
+            className={`px-4 py-2 mb-4 rounded-full whitespace-nowrap text-sm border transition cursor-pointer ${
               selectedGenre === genre.id
                 ? "bg-black text-white border-black"
                 : "bg-white dark:bg-slate-800 dark:text-white border-gray-400"
