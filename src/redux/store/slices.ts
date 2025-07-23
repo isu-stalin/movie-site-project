@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction} from '@reduxjs/toolkit'
-import search from './searchslice'
+import search from './sliceSearch'
 
 interface User {
     name: string;

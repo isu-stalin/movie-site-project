@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
-import { setSearchTerm } from "@/redux/store/searchslice";
+import { setSearchTerm } from "@/redux/store/sliceSearch";
 import logo from "@/assets/logo.svg";
 import movieIc from "@/assets/movie-icon.svg";
 import tabledIc from "@/assets/tablet-line.svg";
