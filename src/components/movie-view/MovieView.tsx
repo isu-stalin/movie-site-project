@@ -49,11 +49,11 @@ const MovieView: FC<Props> = ({ data }) => {
 
             <button
               onClick={() => {
-                if (!user) {
-                  alert("Чтобы сохранить фильм, войдите в аккаунт.");
-                  return;
-                }
                 handleToggle(movie.id)
+                if (!user) {
+                  // alert("Фильм сохранён локально. Войдите, чтобы сохранить навсегда.");
+                  // return;
+                }
               }}
               className={`absolute top-2 right-2 p-2 w-[40px] rounded-full border-1 cursor-pointer ${
                 isFavorite ? "bg-red-600 text-white" : "bg-white text-black"

@@ -39,7 +39,7 @@ interface FavoritesState {
 
 const getEmail = () => {
   const user = localStorage.getItem("user");
-  return user ? JSON.parse(user).email : null;
+  return user ? JSON.parse(user).email : 'guest';
 };
 
 const getSavedFavorites = () => {

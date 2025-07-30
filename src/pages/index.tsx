@@ -9,7 +9,7 @@ const Saved = lazy(() => import("./saved/Saved"));
 const Search = lazy(() => import("./search/Search"));
 const Profile = lazy(() => import("./profile/Profile"));
 const NotFound = lazy(() => import("./notFound/NotFound"));
-const ProtectedRoute = lazy(() => import("../components/protectRoute/ProtectedRoute"));
+// const ProtectedRoute = lazy(() => import("../components/protectRoute/ProtectedRoute"));
 const ActorDetails = lazy(() => import("./actorDetails/ActorDetails"));
 
 const MainRouter = () => {
@@ -32,11 +32,7 @@ const MainRouter = () => {
         },
         {
           path: "/saved",
-          element: (
-            <ProtectedRoute>
-              <Saved/>
-            </ProtectedRoute>
-          ),
+          element: <Saved />
         },
         {
           path: "/search",
