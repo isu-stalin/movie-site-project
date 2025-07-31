@@ -37,7 +37,14 @@ const Profile = () => {
       ) : (
         <>
           <h1 className="mb-4">Войдите через Google</h1>
-          <GoogleLogin onSuccess={handleLogin} onError={() => console.log("Ошибка входа")} />
+          <div style={{ display: 'inline-block', transform: 'scale(1.2)' }}>
+            <GoogleLogin
+              onSuccess={handleLogin}
+              onError={() => console.log("Ошибка входа")}
+              // theme="filled_blue"
+              size="large"
+            />  
+          </div>
         </>
       )}
     </div>
